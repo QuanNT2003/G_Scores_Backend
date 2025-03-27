@@ -5,26 +5,25 @@ export class Score {
   @Prop({ required: true })
   sbd: number;
 
-  @Prop({ required: true })
-  toan: number;
+  toan?: number;
 
-  @Prop({ required: true })
-  ngu_van: number;
+  ngu_van?: number;
 
-  @Prop({ required: true })
-  ngoai_ngu: number;
+  ngoai_ngu?: number;
 
-  @Prop({ required: true })
-  vat_li: number;
+  vat_li?: number;
 
-  @Prop({ required: true })
-  hoa_hoc: number;
+  hoa_hoc?: number;
 
-  @Prop({ required: true })
-  sinh_hoc: number;
+  sinh_hoc?: number;
 
-  @Prop({ required: true })
-  ma_ngoai_ngu: string;
+  lich_su?: number;
+
+  dia_li?: number;
+
+  gdcd?: number;
+
+  ma_ngoai_ngu?: string;
 }
 
 export const ScoreScheme = SchemaFactory.createForClass(Score);
