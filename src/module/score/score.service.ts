@@ -43,13 +43,13 @@ export class ScoreServices {
       .countDocuments({ [subject]: { $gt: 8 } })
       .exec();
 
-    const countBW8And6 = await this.scoreModel
+    const countF6T8 = await this.scoreModel
       .countDocuments({
         [subject]: { $gt: 6, $lt: 8 },
       })
       .exec();
 
-    const countBW6And4 = await this.scoreModel
+    const countF4T6 = await this.scoreModel
       .countDocuments({
         [subject]: { $gt: 4, $lt: 6 },
       })
@@ -60,10 +60,8 @@ export class ScoreServices {
       .exec();
 
     return {
-      'Lớn hơn 8': countGT8,
-      'Từ 6 đến 8': countBW8And6,
-      'Từ 4 đến 6': countBW6And4,
-      'Nhỏ hơn 4': countLT4,
+      labels: ['Greater than 8', 'From 6 to 8', 'From 4 to 6', 'Less than 4'],
+      values: [countGT8, countF6T8, countF4T6, countLT4],
     };
   }
 

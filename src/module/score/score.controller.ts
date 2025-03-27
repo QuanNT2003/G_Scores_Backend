@@ -36,7 +36,7 @@ export class ScoreController {
   }
 
   @Get('/report/top_group_a')
-  async getTop10KhoiA(): Promise<ResponseData<object[]>> {
+  async getTop10GroupA(): Promise<ResponseData<object[]>> {
     // console.log('Đã vào controller getTop10KhoiA');
     try {
       const topScores = await this.scoreService.getTop10GroupA();
