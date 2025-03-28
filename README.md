@@ -15,7 +15,7 @@ npm i
 **3. Chạy chương trình và sử dụng**
 
 ```bash
-npx start
+npm start
 ```
 
 # G_Scores_Backend
