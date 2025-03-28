@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ResponseData } from 'src/global/globalClass';
 import { HttpMessage, HttpStatusCode } from 'src/global/globalEnum';
 import { ScoreServices } from './score.service';
@@ -57,6 +48,26 @@ export class ScoreController {
     }
   }
 
+  @Get('/exam_type')
+  async getExamType(
+    @Param('subject') subject: string,
+  ): Promise<ResponseData<object>> {
+    try {
+      const score = await this.scoreService.getExamType(subject);
+      return new ResponseData<object>(
+        score,
+        HttpStatusCode.SUCCESS,
+        HttpMessage.SUCCESS,
+      );
+    } catch (error) {
+      return new ResponseData<object>(
+        false,
+        HttpStatusCode.ERROR,
+        HttpMessage.ERROR,
+      );
+    }
+  }
+
   @Get('/:id')
   async getDetailtScore(@Param('id') id: string): Promise<ResponseData<Score>> {
     try {
@@ -81,6 +92,26 @@ export class ScoreController {
   ): Promise<ResponseData<object>> {
     try {
       const score = await this.scoreService.getReportSubject(subject);
+      return new ResponseData<object>(
+        score,
+        HttpStatusCode.SUCCESS,
+        HttpMessage.SUCCESS,
+      );
+    } catch (error) {
+      return new ResponseData<object>(
+        false,
+        HttpStatusCode.ERROR,
+        HttpMessage.ERROR,
+      );
+    }
+  }
+
+  @Get('/get_greater_than_5/:subject')
+  async getGreaterThan5(
+    @Param('subject') subject: string,
+  ): Promise<ResponseData<object>> {
+    try {
+      const score = await this.scoreService.getGreaterThan5(subject);
       return new ResponseData<object>(
         score,
         HttpStatusCode.SUCCESS,

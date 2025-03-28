@@ -65,6 +65,36 @@ export class ScoreServices {
     };
   }
 
+  async getGreaterThan5(subject: string) {
+    const validSubjects = [
+      'toan',
+      'ngu_van',
+      'ngoai_ngu',
+      'vat_li',
+      'hoa_hoc',
+      'sinh_hoc',
+      'lich_su',
+      'dia_li',
+      'gdcd',
+    ];
+
+    if (!validSubjects.includes(subject)) {
+      throw new Error(`Môn học ${subject} không hợp lệ`);
+    }
+
+    const countGT5 = await this.scoreModel
+      .countDocuments({ [subject]: { $gt: 5 } })
+      .exec();
+
+    const numberTest = await this.scoreModel
+      .countDocuments({ [subject]: { $ne: null } })
+      .exec();
+    return {
+      subject: subject,
+      number: countGT5,
+      numberTest: numberTest,
+    };
+  }
   async getTop10GroupA() {
     try {
       const top10 = await this.scoreModel
@@ -101,6 +131,37 @@ export class ScoreServices {
         .exec();
 
       return top10;
+    } catch (error) {
+      console.error('Lỗi service:', error);
+      throw new Error('Lỗi khi lấy danh sách top 10 khối A');
+    }
+  }
+
+  async getExamType() {
+    try {
+      const naturalScienceExam = await this.scoreModel
+        .countDocuments({
+          $and: [
+            { vat_li: { $ne: null } },
+            { hoa_hoc: { $ne: null } },
+            { sinh_hoc: { $ne: null } },
+          ],
+        })
+        .exec();
+      const socialScienceExam = await this.scoreModel
+        .countDocuments({
+          $and: [
+            { lich_su: { $ne: null } },
+            { dia_li: { $ne: null } },
+            { gdcd: { $ne: null } },
+          ],
+        })
+        .exec();
+
+      return {
+        naturalScienceExam: naturalScienceExam,
+        socialScienceExam: socialScienceExam,
+      };
     } catch (error) {
       console.error('Lỗi service:', error);
       throw new Error('Lỗi khi lấy danh sách top 10 khối A');
